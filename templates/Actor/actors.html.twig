@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="pagination">
+            {% for row in pagination|batch(10) %}
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h1 class="alert-heading">Liste des acteurs</h1>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                    {% for actor in row %}
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    {% set professions = actor.primaryProfession %}
+                                    <h5 class="card-title">{{ actor.primaryName }}</h5>
+                                    <p class="card-subtitle">Date de naissance :{{ actor.birthYear }}</p>
+                                    {% if actor.deathYear is defined and is_integer(actor.deathYear)  %}
+                                        <p class="card-subtitle">Date de décès :{{ actor.deathYear }}</p>
+                                    {% endif %}
+                                    <p class="card-subtitle">Profession(s):</p>
+                                    <ul>
+                                        {% set professions = professions|split(',') %}
+                                        {% for profession in professions %}
+                                            <li>{{ profession|trim }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <a href="{{ path('actor', {id: actor.nconst}) }}" style="text-align: center" class="btn btn-primary">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {# Afficher les liens de pagination #}
+    <div class="alert">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

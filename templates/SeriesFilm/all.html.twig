@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+ {% block style %}
+     <style>
+         body {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             /*height: 100vh;*/
+             margin: 0;
+         }
+
+         .container {
+             width: 100%;
+             max-width: 1200px;
+         }
+
+         .titre-films {
+             font-size: 24px;
+             font-weight: bold;
+             text-align: center;
+             margin: 20px 0;
+         }
+
+         .col-md-4 {
+             width: max-content;
+             margin: 0 auto;
+         }
+
+         .card {
+             width: 300px;
+         }
+
+         .card-img-top {
+             height: 240px;
+             object-fit: cover; /* Pour que l'image soit recadrée correctement */
+         }
+
+         .card-body {
+             text-align: center;
+         }
+     </style>
+ {% endblock %}
+{% block body %}
+
+    <div class="container">
+        {{ parent() }} <br><br>
+        <h2 class="display-4" style="text-align: center">Films</h2>
+        <hr><br>
+        <div class="row">
+            {% for genre in genres %}
+                <div class="col-md-4" style="width: max-content">
+                    <a href="{{ path('films', {genre: genre }) }}"><div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ genre }}</h5>
+                        </div>
+                        </div></a>
+                </div>
+
+            {% if loop.index % 3 == 0 %}
+        </div><div class="row">
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

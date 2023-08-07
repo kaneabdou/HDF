@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block style %}
+    <style>
+        .custom-image-size {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Style pour centrer le contenu au milieu de la page */
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h2 class="display-4" style="text-align: center">{{ total }} résultats trouvès</h2>
+    <br>
+    <hr>
+    <div class="container centered-content">
+        <div class="pagination">
+            {% for row in movies|batch(10) %}
+                <div class="row mb-4">
+                    {% for series in row %}
+                        {% for serie in series %}
+                            {% set image = serie.primaryImage %}
+                            {% set url = 'https://placehold.co/400' %}
+                            {% set width = '200' %} {# Définir la largeur souhaitée ici, par exemple 200 pixels #}
+                            {% set height = '' %}
+
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        {% set image = serie.primaryImage %}
+
+                                        {% for key, value in image %}
+                                            {% if key == 'url' %}
+                                                {% set url = value %}
+                                            {% endif %}
+
+                                            {% if key == 'height' %}
+                                                {% set height = value %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% set titleText = serie.titleText %}
+                                        <div class="card mb-4">
+                                            <img src="{{ url }}" alt="Image" class="card-img-top custom-image-size" width="{{ width }}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ titleText.text }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {# Afficher les liens de pagination #}
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(movies) }}
+    </div>
+{% endblock %}

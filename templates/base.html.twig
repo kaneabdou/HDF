@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name=path"viewport" content="width=device-width, initial-scale=1">
+    {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.1/dist/cerulean/bootstrap.min.css" rel="stylesheet">
+    {% endblock %}
+    {% block title %}  {% endblock title %}
+    {% block style %} {% endblock %}
+</head>
+<body>
+{% block body %}
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Accueil
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="{{ path('series') }}">Series</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('genre') }}">Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('actors') }}">Acteurs</a>
+                    </li>
+                </ul>
+                <form class="d-flex" method="get" action="{{ path('search_movie') }}">
+                    <input class="form-control me-sm-2" name="keyword" placeholder="recherche" id="keyword">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+</body>
+
+</html>
